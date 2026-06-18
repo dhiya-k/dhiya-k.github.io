@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
 
 const BENGALURU = {
   lat: 12.9716,
@@ -26,14 +25,29 @@ export function LocationMap() {
       zoom: 5,
       pitch: 0,
       bearing: 0,
-      scrollZoom: false,
+      scrollZoom: true,
       boxZoom: false,
       dragRotate: false,
-      touchZoom: false,
-      doubleClickZoom: false,
+      doubleClickZoom: true,
+      touchZoomRotate: true,
       keyboard: false,
-      dragPan: false,
+      dragPan: true,
+      attributionControl: false,
     });
+
+    map.current.addControl(
+      new maplibregl.AttributionControl({ compact: true })
+    );
+
+    map.current.on("load", () => {
+      map.current?.resize();
+    });
+
+    const resizeObserver = new ResizeObserver(() => {
+      map.current?.resize();
+    });
+
+    resizeObserver.observe(mapContainer.current);
 
     // Add marker at Bengaluru
     const markerElement = document.createElement("div");
@@ -49,6 +63,7 @@ export function LocationMap() {
 
     // Cleanup
     return () => {
+      resizeObserver.disconnect();
       if (map.current) {
         map.current.remove();
         map.current = null;
@@ -59,8 +74,7 @@ export function LocationMap() {
   return (
     <div
       ref={mapContainer}
-      className="h-28 w-full rounded-xl border border-border overflow-hidden bg-panel-muted"
-      style={{ minHeight: "7rem" }}
+      className="location-map-container pointer-events-auto rounded-xl border border-border overflow-hidden bg-panel-muted"
     />
   );
 }

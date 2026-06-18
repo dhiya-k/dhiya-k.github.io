@@ -16,6 +16,30 @@ const navItems = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    let ticking = false;
+
+    const updateScrolledState = () => {
+      const nextScrolled = window.scrollY > 50;
+      setIsScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateScrolledState);
+    };
+
+    updateScrolledState();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   React.useEffect(() => {
     if (!menuOpen) return;
@@ -29,15 +53,29 @@ export function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="fixed left-1/2 top-4 z-50 w-[min(92vw,980px)] -translate-x-1/2">
+    <header
+      className={cn(
+        "fixed left-1/2 top-4 z-50 -translate-x-1/2 transition-[width] duration-300 ease-out",
+        isScrolled ? "w-[min(88vw,900px)]" : "w-[min(92vw,980px)]",
+        isScrolled && "scrolled"
+      )}
+    >
       <div
         className={cn(
-          "rounded-full border border-white/10 bg-black/70",
-          "shadow-[0_12px_40px_rgba(0,0,0,0.35)]",
-          "backdrop-blur-xl supports-[backdrop-filter]:bg-black/55"
+          "rounded-full border border-white/10",
+          "transition-all duration-300 ease-out",
+          isScrolled
+            ? "bg-black/78 shadow-[0_16px_44px_rgba(0,0,0,0.42)] backdrop-blur-xl supports-backdrop-filter:bg-black/68"
+            : "bg-black/70 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl supports-backdrop-filter:bg-black/55"
         )}
       >
-        <div className="flex items-center justify-between gap-3 px-4 py-3 md:px-6">
+        <div
+          className={cn(
+            "flex items-center justify-between gap-3 px-4 md:px-6",
+            "transition-all duration-300 ease-out",
+            isScrolled ? "py-2" : "py-3"
+          )}
+        >
           <Link
             href="#home"
             className="text-sm font-semibold tracking-wide text-foreground"
@@ -81,7 +119,7 @@ export function Header() {
         className={cn(
           "mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/70",
           "shadow-[0_18px_45px_rgba(0,0,0,0.35)]",
-          "backdrop-blur-xl supports-[backdrop-filter]:bg-black/55",
+          "backdrop-blur-xl supports-backdrop-filter:bg-black/55",
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
           "transition-all duration-200 md:hidden"
         )}

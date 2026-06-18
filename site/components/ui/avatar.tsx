@@ -8,6 +8,7 @@ export interface AvatarProps {
   size?: "sm" | "md" | "lg";
   showPresence?: boolean;
   className?: string;
+  imageClassName?: string;
 }
 
 const sizeClasses = {
@@ -22,6 +23,7 @@ export function Avatar({
   size = "md",
   showPresence = true,
   className,
+  imageClassName,
 }: AvatarProps) {
   return (
     <div className={cn("relative flex-shrink-0", sizeClasses[size], className)}>
@@ -30,7 +32,7 @@ export function Avatar({
           src={src}
           alt={alt}
           fill
-          className="object-cover"
+          className={cn("object-cover", imageClassName)}
           priority
           sizes={size === "sm" ? "40px" : size === "md" ? "48px" : "64px"}
         />

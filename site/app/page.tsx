@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   Briefcase,
   Cpu,
   FileDown,
@@ -25,12 +25,6 @@ const navItems = [
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
-];
-
-const socialLinks = [
-  { label: "GitHub", href: "https://github.com/yourname" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/yourname" },
-  { label: "Resume", href: "/resume.pdf" },
 ];
 
 const skillGroups = [
@@ -115,45 +109,10 @@ const experiences = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-foreground relative pt-32 md:pt-36">
+    <div className="min-h-screen text-foreground relative pt-24 md:pt-28">
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_120%_90%_at_55%_6%,rgba(66,24,140,0.32),rgba(18,18,18,0)_70%),radial-gradient(ellipse_90%_80%_at_55%_55%,rgba(10,28,84,0.18),rgba(15,15,15,0)_75%)] pointer-events-none" />
-      <div className="relative z-10 grid w-full grid-cols-1 gap-6 px-4 py-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-8 lg:px-6 xl:grid-cols-[240px_minmax(0,1fr)_300px] 2xl:px-8">
-        <aside className="hidden w-full max-w-[240px] flex-col gap-8 rounded-2xl border border-border bg-[#0b0b0b] p-6 lg:flex lg:sticky lg:top-28 lg:h-[calc(100vh-7rem)]">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-muted">
-              Portfolio
-            </p>
-            <h2 className="mt-2 text-xl font-semibold">Dhiya K</h2>
-            <p className="mt-2 text-sm text-muted">
-              Frontend + AI/ML integrations
-            </p>
-          </div>
-          <nav className="flex flex-col gap-3 text-sm">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="rounded-full px-4 py-2 text-muted transition hover:bg-panel-muted hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <div className="mt-auto space-y-3 text-sm">
-            {socialLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-muted transition hover:border-accent hover:text-foreground"
-              >
-                {item.label}
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
-        </aside>
-
-        <main className="flex-1 space-y-14">
+      <div className="relative z-10 w-full px-4 py-6 lg:px-6 2xl:px-8">
+        <main className="space-y-14">
           <header className="flex flex-col gap-4 rounded-2xl border border-border bg-panel p-6 lg:hidden">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -177,60 +136,131 @@ export default function Home() {
             </div>
           </header>
 
-          <section id="home" className="space-y-6">
-            <Reveal>
-              <div className="rounded-2xl border border-border bg-panel p-8">
-                <p className="text-xs uppercase tracking-[0.2em] text-muted">
-                  Frontend Developer + AI/ML Integration
+          <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-start">
+            <section id="home" className="space-y-6 scroll-mt-28">
+              <Reveal>
+                <div className="rounded-2xl border border-border bg-panel p-8 flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_208px] md:gap-6">
+                  {/* Text Content */}
+                  <div className="min-w-0 flex flex-col gap-4 md:row-span-2">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+                        Dhiya K
+                      </h1>
+                      <div className="flex gap-3 shrink-0">
+                        <Button asChild>
+                          <Link href="/projects">View Projects</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                          <a href="/resume.pdf">Download Resume</a>
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-lg text-muted">
+                      I'm a Frontend developer and AI/ML integration enthusiast focused on building clean, responsive, and user-centric web applications. I enjoy turning complex ideas into simple interfaces, integrating machine learning features into real products, and designing experiences that are both intuitive and performant. My work combines strong UI engineering, practical problem solving, and modern web technologies to create applications that people actually enjoy using.
+                    </p>
+                  </div>
+
+                  {/* Profile Image */}
+                  <div className="relative w-full flex-shrink-0 overflow-hidden rounded-2xl aspect-[3/4] md:w-52 md:self-start md:row-start-1 md:col-start-2">
+                    <Image
+                      src="/pfp2.jpeg"
+                      alt="Dhiya K"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 70vw, 208px"
+                      priority
+                    />
+                  </div>
+
+                  {/* Feature Blocks */}
+                  <div className="grid gap-4 md:grid-cols-3 mt-8 md:col-start-1 md:col-span-2">
+                    {[
+                      {
+                        title: "Product focus",
+                        text: "I ship interfaces that explain ML results, not just render them.",
+                      },
+                      {
+                        title: "Responsive by default",
+                        text: "Every layout adapts cleanly across devices and breakpoints.",
+                      },
+                      {
+                        title: "Engineer first",
+                        text: "I balance visual polish with solid performance metrics.",
+                      },
+                    ].map((item) => (
+                      <div
+                        key={item.title}
+                        className="rounded-2xl border border-border bg-panel-muted p-5"
+                      >
+                        <p className="text-sm font-semibold">{item.title}</p>
+                        <p className="mt-2 text-sm text-muted">{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            </section>
+
+            <aside className="hidden w-full max-w-[300px] flex-col gap-6 rounded-2xl border border-border bg-[#0b0b0b] p-6 xl:flex">
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">Let us connect</h3>
+                <p className="text-sm text-muted">
+                  Open to frontend internships and AI-focused web projects.
                 </p>
-                <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">
-                  Dhiya K
-                </h1>
-                <p className="mt-3 max-w-2xl text-lg text-muted">
-                  I build responsive interfaces and integrate machine learning
-                  models into real products, focusing on clarity, speed, and
-                  practical impact.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button asChild>
-                    <Link href="#projects">View Projects</Link>
-                  </Button>
-                  <Button asChild variant="outline">
-                    <a href="/resume.pdf">Download Resume</a>
-                  </Button>
+              </div>
+              <div className="space-y-4 text-sm">
+                <div>
+                  <div className="flex items-start gap-3">
+                    <MapPin className="mt-1 h-4 w-4 text-accent" />
+                    <div>
+                      <p className="text-xs uppercase text-muted">Location</p>
+                      <p>Bengaluru, India</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 pointer-events-auto">
+                    <LocationMap />
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Briefcase className="mt-1 h-4 w-4 text-accent" />
+                  <div>
+                    <p className="text-xs uppercase text-muted">Availability</p>
+                    <p>Internship · Remote</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Mail className="mt-1 h-4 w-4 text-accent" />
+                  <div>
+                    <p className="text-xs uppercase text-muted">Email</p>
+                    <p>dhiya@example.com</p>
+                  </div>
                 </div>
               </div>
-            </Reveal>
-          </section>
-
-          <section id="about" className="space-y-4">
-            <Reveal>
-              <div className="grid gap-4 md:grid-cols-3">
-                {[
-                  {
-                    title: "Product focus",
-                    text: "I ship interfaces that explain ML results, not just render them.",
-                  },
-                  {
-                    title: "Responsive by default",
-                    text: "Every layout adapts cleanly across devices and breakpoints.",
-                  },
-                  {
-                    title: "Engineer first",
-                    text: "I balance visual polish with solid performance metrics.",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-border bg-panel p-5"
-                  >
-                    <p className="text-sm font-semibold">{item.title}</p>
-                    <p className="mt-2 text-sm text-muted">{item.text}</p>
-                  </div>
-                ))}
+              <div className="mt-auto space-y-3">
+                <a
+                  href="https://github.com/yourname"
+                  className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
+                >
+                  GitHub
+                  <Github className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/yourname"
+                  className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
+                >
+                  LinkedIn
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="/resume.pdf"
+                  className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
+                >
+                  Resume
+                  <FileDown className="h-4 w-4" />
+                </a>
               </div>
-            </Reveal>
-          </section>
+            </aside>
+          </div>
 
           <section id="skills" className="space-y-4">
             <Reveal>
@@ -271,7 +301,7 @@ export default function Home() {
                     <h2 className="mt-2 text-3xl font-semibold">Dhiya</h2>
                   </div>
                   <Link
-                    href="#projects"
+                    href="/projects"
                     className="text-sm text-muted transition hover:text-foreground"
                   >
                     Show all
@@ -368,68 +398,6 @@ export default function Home() {
           </section>
         </main>
 
-        <aside className="hidden w-full max-w-[300px] flex-col gap-6 rounded-2xl border border-border bg-[#0b0b0b] p-6 xl:flex xl:sticky xl:top-28 xl:h-[calc(100vh-7rem)]">
-          <div className="space-y-2">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted">
-              Contact Panel
-            </p>
-            <h3 className="text-lg font-semibold">Let us connect</h3>
-            <p className="text-sm text-muted">
-              Open to frontend internships and AI-focused web projects.
-            </p>
-          </div>
-          <div className="space-y-4 text-sm">
-            <div>
-              <div className="flex items-start gap-3">
-                <MapPin className="mt-1 h-4 w-4 text-accent" />
-                <div>
-                  <p className="text-xs uppercase text-muted">Location</p>
-                  <p>Bengaluru, India</p>
-                </div>
-              </div>
-              <div className="mt-3">
-                <LocationMap />
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Briefcase className="mt-1 h-4 w-4 text-accent" />
-              <div>
-                <p className="text-xs uppercase text-muted">Availability</p>
-                <p>Internship · Remote</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Mail className="mt-1 h-4 w-4 text-accent" />
-              <div>
-                <p className="text-xs uppercase text-muted">Email</p>
-                <p>dhiya@example.com</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-auto space-y-3">
-            <a
-              href="https://github.com/yourname"
-              className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
-            >
-              GitHub
-              <Github className="h-4 w-4" />
-            </a>
-            <a
-              href="https://linkedin.com/in/yourname"
-              className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
-            >
-              LinkedIn
-              <Linkedin className="h-4 w-4" />
-            </a>
-            <a
-              href="/resume.pdf"
-              className="flex items-center justify-between rounded-full border border-border px-4 py-2 text-sm text-muted transition hover:border-accent hover:text-foreground"
-            >
-              Resume
-              <FileDown className="h-4 w-4" />
-            </a>
-          </div>
-        </aside>
       </div>
     </div>
   );
